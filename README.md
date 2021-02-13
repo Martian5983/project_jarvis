@@ -1,0 +1,191 @@
+# project_jarvis
+import pyttsx3  # it import's the voice
+import speech_recognition as sr  # it do text to speech function
+import datetime  # this moudle wishes me acording to time eg:goodmorning,goodevening,tells the time
+import wikipedia  # this search my speech in wikipedia
+import webbrowser
+import pywhatkit
+import pyjokes
+
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+
+engine = pyttsx3.init('sapi5')  # this is voice that i have use from pyttsx3
+voices = engine.getProperty('voices')
+
+
+# engine.setProperty('voice',voices[0].id)   #This is optional
+
+def wishme():
+    hour = int(datetime.datetime.now().hour)
+    if hour >= 0 and hour < 12:
+        speak('Good morning sir!')
+
+    elif hour >= 12 and hour < 18:
+        speak('good Afternoon sir!')
+
+    else:
+        speak('good Evening sir!')
+
+    speak('I am Jarvis. Please tell me how may i help you')
+
+
+def Takecommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("listning...")
+        r.pause_threshold = 1
+        audio = r.listen(source)
+
+        try:
+            print('Recognising...')
+            quary = r.recognize_google(audio, language='en-in')
+            if "jarvis" in quary:
+                quary = quary.replace("jarvis", "")
+            print(f"user said:{quary}")
+
+        except Exception as e:
+            print('Say that again please...')
+            return "None"
+        return quary
+
+
+if __name__ == "__main__":
+    wishme()
+    while True:
+        quary = Takecommand().lower()
+
+        # logic for executing task based on quary.
+        if 'wikipedia' in quary:
+            speak('searching Wikipedia....')
+            quary = quary.replace('Wikipedia', "")
+            results = wikipedia.summary(quary, sentences=2)
+            speak('According to Wikipedia')
+            print(results)
+            speak(results)
+
+
+        elif 'open youtube' in quary:
+            speak("opening youtube")
+            webbrowser.open("https://www.youtube.com")
+
+        elif 'tell me about great mathematician' in quary:
+            speak(
+                'Srinivasa Ramanujan, (born December 22, 1887, Erode, India—died April 26, 1920, Kumbakonam), Indian mathematician whose contributions to the theory of numbers include pioneering discoveries of the properties of the partition function.Dec 22, 2020 Died: April 26, 1920, KumbakonamBorn: December 22, 1887, Erod Works written: Ramanujan’s Notebooks: Part III Profession: Mathematician. He is the elected fallow of royal society')
+
+        elif 'what should i call you' in quary:
+            speak('sir you should call me jarvis. Because thats my name.')
+
+        elif 'ok' in quary:
+            speak('yes sir')
+
+        elif 'why you are slow' in quary:
+            speak('sorry sir i will improve it')
+
+        elif 'open google' in quary:
+            webbrowser.open("google.com")
+
+        elif 'open whatsapp' in quary:
+            webbrowser.open("https://web.whatsapp.com")
+
+        elif 'open whatsapp' in quary:
+            webbrowser.open("https://web.whatsapp.com")
+
+        elif 'open facebook' in quary:
+            webbrowser.open("facebook.com")
+
+        elif 'keep quiet' in quary:
+            speak('ok sir')
+
+        elif 'who are you' in quary:
+            speak("i am Jarvis i want love")
+
+        elif 'what is your name' in quary:
+            speak("My name is jarvis")
+
+        elif 'what should i study' in quary:
+            speak('Yeah. you should study maths because your maths is little weak')
+
+        elif 'good' in quary:
+            speak('thank you sir')
+
+        elif 'how many days are there in a week' in quary:
+            speak('their are seven days in a week')
+
+        elif 'how many months are there in a year' in quary:
+            speak('there are 12 months in a year')
+
+        elif 'introduce yourself' in quary:
+            speak("""
+            I am jarvis assistant of my sir balaji gupta. 
+            I am the future and an AI assistant, I can do everything. I am every thing. 
+            I am very .
+            I never lie.
+            """)
+
+        elif 'thank you' in quary:
+            speak('Welcome sir')
+
+        elif 'open classroom' in quary:
+            webbrowser.open('classroom.google.com')
+
+        elif 'i want to talk with you' in quary:
+            speak('of course')
+
+        elif 'what do you eat' in quary:
+            speak('i eat battery ')
+
+        elif "you are a good assistant" in quary:
+            speak('thank you sir ')
+
+        elif 'should i bath' in quary:
+            speak('yes, you should bath every day')
+
+        elif 'pubg' in quary:
+            speak('Hey!, sir I think you do not need to play these games ')
+
+        elif 'who made you' in quary:
+            speak("Balaji gupta has made me. He is python master")
+
+        elif 'nice work' in quary:
+            speak("thank you sir")
+
+        elif 'help me' in quary:
+            speak("tell me how can i help you")
+
+        elif 'what can you do' in quary:
+            speak("i can help you in many ways")
+
+        elif 'like' in quary:
+            speak("open web applications,search in wikipedia else i can do many work. If you develop me")
+
+        elif 'the time' in quary:
+            strTime = datetime.datetime.now().strftime("%H:%M:%p:%a")
+            print(strTime)
+            speak(f"Sir, the time is {strTime}")
+
+        elif 'go to sleep' in quary:
+            speak("quiting")
+            break
+
+        elif 'play' in quary:
+            speak("playing")
+            music = quary.replace('play', '')
+            print("playing" + music)
+            pywhatkit.playonyt(music)
+
+        elif "tell me a joke" in quary:
+            speak(pyjokes.get_joke())
+
+        if 'sing a song that tony stark loves to listen' in quary:
+            speak("ok sir. would you like to listen this")
+            quary.replace('jarvis', '')
+            print("playing")
+            pywhatkit.playonyt("Tony Stark Playlist Vol. 1")
+
+
+
+
